@@ -21,23 +21,42 @@ archive.pipe(output);
 
 // Add required files
 archive.file('index.html', { name: 'index.html' });
+archive.file('admin-page.html', { name: 'admin-page.html' });
 archive.file('css/style.css', { name: 'css/style.css' });
 archive.file('js/app.js', { name: 'js/app.js' });
-
+archive.file('js/admin.js', { name: 'js/admin.js' });
 
 // Add deployment instructions
 const deploymentInstructions = `
-# Website Setup Instructions
+# StockTrader Pro - Real-time Stock Trading Platform
 
-1. Extract all files from the zip archive
-2. Maintain the folder structure:
-   - index.html
-   - css/style.css
-   - js/app.js
+## Quick Start
+1. Extract all files maintaining the folder structure
+2. Open index.html in your web browser
+3. Login using credentials:
+   - Regular user: demo/demo
+   - Admin user: admin/admin
 
-3. Open index.html in a web browser to use the application
+## Features
+- Real-time stock price simulation
+- Interactive heat map showing market performance
+- Stock charts on home and watchlist pages
+- Stock trading functionality (buy/sell) with:
+  - Portfolio tracking with real-time updates
+  - Trade requests requiring admin approval
+- Account management with:
+  - Deposit/withdraw money features
+  - Balance updates after admin approval
+- Admin panel features:
+  - Trade approval system
+  - Money transaction approval
+  - Price/chart visibility toggle
 
-Note: This is a standalone website version with all functionality implemented in vanilla JavaScript.
+## Notes
+- This is a standalone version that works without a server
+- Stock data is simulated and updates every 5 seconds
+- User data is stored in browser's localStorage
+- All trades and money transactions require admin approval
 `;
 
 archive.append(deploymentInstructions, { name: 'README.md' });
