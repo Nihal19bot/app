@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockTrader Pro - Admin Panel</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Admin Login Section -->
+    <div id="adminAuthSection" class="auth-container">
+        <div class="auth-card">
+            <h2 class="text-2xl font-bold mb-4">Admin Login</h2>
+            <form id="adminLoginForm" class="auth-form">
+                <div>
+                    <label for="adminUsername">Username</label>
+                    <input type="text" id="adminUsername" name="username" required>
+                </div>
+                <div>
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" name="password" required>
+                </div>
+                <button type="submit" class="btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="hidden">
+        <nav class="navbar">
+            <div class="nav-content">
+                <a href="#" class="logo">StockTrader Pro - Admin Panel</a>
+                <button onclick="adminLogout()" class="btn-danger">Logout</button>
+            </div>
+        </nav>
+
+        <main class="container">
+            <div class="admin-section">
+                <h2>Admin Controls</h2>
+                
+                <div class="toggle-controls">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="priceChartsToggle">
+                        <span class="slider"></span>
+                    </label>
+                    <span>Show Prices & Charts</span>
+                </div>
+
+                <div class="balance-adjustment">
+                    <h3>Adjust User Balance</h3>
+                    <form id="balanceAdjustForm" class="balance-form">
+                        <input type="text" name="username" placeholder="Username" required>
+                        <input type="number" name="amount" placeholder="Amount (use - for deduction)" required>
+                        <button type="submit" class="btn-primary">Adjust Balance</button>
+                    </form>
+                </div>
+
+                <div class="pending-trades-section">
+                    <h3>Pending Trades</h3>
+                    <div id="pendingTrades" class="pending-trades">
+                        <!-- Pending trades will be listed here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

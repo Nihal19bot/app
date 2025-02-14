@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockTrader Pro - Real-time Stock Trading Platform</title>
+    <meta name="description" content="Stock market learning platform with interactive charts and portfolio management">
+    <meta name="theme-color" content="#2563eb">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Required external libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.1/dist/chartjs-chart-financial.min.js"></script>
+</head>
+<body>
+    <!-- Auth Section -->
+    <div id="authSection" class="auth-container">
+        <div class="auth-card">
+            <div class="auth-tabs">
+                <div class="auth-tab active" data-tab="login">Login</div>
+                <div class="auth-tab" data-tab="register">Register</div>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form">
+                <div>
+                    <label for="loginUsername">Username</label>
+                    <input type="text" id="loginUsername" name="username" placeholder="Try: demo" required>
+                </div>
+                <div>
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" name="password" placeholder="Try: demo" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" class="auth-form" style="display: none;">
+                <div>
+                    <label for="registerUsername">Username</label>
+                    <input type="text" id="registerUsername" name="username" required>
+                </div>
+                <div>
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" name="password" required>
+                </div>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="hidden">
+        <nav class="navbar">
+            <div class="nav-content">
+                <a href="#" class="logo">StockTrader Pro</a>
+            </div>
+        </nav>
+
+        <main class="container">
+            <!-- Home Page -->
+            <section id="home" class="page active">
+                <div class="heat-map-container">
+                    <h2>Market Heat Map</h2>
+                    <div id="heatMap" class="heat-map-grid"></div>
+                </div>
+                <div class="market-overview">
+                    <h2>Market Overview</h2>
+                    <div id="marketCharts" class="chart-grid"></div>
+                </div>
+                <div class="stock-list"></div>
+            </section>
+
+            <!-- Watchlist Page -->
+            <section id="watchlist" class="page">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search stocks by name or symbol...">
+                </div>
+                <div class="trade-section">
+                    <h3>Stock Trading</h3>
+                    <form id="tradeForm" class="trade-form">
+                        <div class="trade-details">
+                            <select id="selectedStock" name="stockSymbol" required>
+                                <option value="">Select Stock</option>
+                            </select>
+                            <input type="number" name="quantity" min="1" step="1" placeholder="Quantity" required>
+                        </div>
+                        <div class="trade-type">
+                            <label>
+                                <input type="radio" name="tradeType" value="buy" checked>
+                                Buy Stock
+                            </label>
+                            <label>
+                                <input type="radio" name="tradeType" value="sell">
+                                Sell Stock
+                            </label>
+                        </div>
+                        <button type="submit" class="btn-primary">Execute Trade</button>
+                    </form>
+                </div>
+                <div class="watchlist-grid"></div>
+            </section>
+
+            <!-- Portfolio Page -->
+            <section id="portfolio" class="page">
+                <div class="portfolio-summary">
+                    <div class="balance">Portfolio Value: ₹<span id="userBalance">0.00</span></div>
+                </div>
+                <div class="portfolio-holdings"></div>
+            </section>
+
+            <!-- Account Page -->
+            <section id="account" class="page">
+                <div class="account-container">
+                    <h2>Account Management</h2>
+                    <div class="profile-section">
+                        <h3>Profile</h3>
+                        <div class="profile-info">
+                            <p>Username: <span id="profileUsername"></span></p>
+                            <p>Account Balance: ₹<span id="accountBalance">0.00</span></p>
+                        </div>
+                    </div>
+                    <div class="transactions-section">
+                        <h3>Money Management</h3>
+                        <form id="transactionForm" class="transaction-form">
+                            <div class="transaction-type">
+                                <label>
+                                    <input type="radio" name="transactionType" value="deposit" checked>
+                                    Deposit Money
+                                </label>
+                                <label>
+                                    <input type="radio" name="transactionType" value="withdraw">
+                                    Withdraw Money
+                                </label>
+                            </div>
+                            <div class="transaction-amount">
+                                <label>Amount (₹)</label>
+                                <input type="number" name="amount" min="1" step="1" required>
+                            </div>
+                            <button type="submit" class="btn-primary">Submit Transaction</button>
+                        </form>
+                    </div>
+                    <div class="logout-section">
+                        <button onclick="logout()" class="btn-danger">Logout</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active" data-page="home">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Home</span>
+            </a>
+            <a href="#" class="nav-item" data-page="watchlist">
+                <span class="nav-icon">📊</span>
+                <span class="nav-label">Watchlist</span>
+            </a>
+            <a href="#" class="nav-item" data-page="portfolio">
+                <span class="nav-icon">💼</span>
+                <span class="nav-label">Portfolio</span>
+            </a>
+            <a href="#" class="nav-item" data-page="account">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Account</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Application Script -->
+    <script src="js/app.js"></script>
+</body>
+</html>
